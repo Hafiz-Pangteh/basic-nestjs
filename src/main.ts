@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const docs = new DocumentBuilder()
-    .setTitle('water-quality-monitoring-api')
+    .setTitle('basic-nestjs')
     .setDescription('description')
     .setVersion('1.0')
     .addTag('')

@@ -15,8 +15,10 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { error } from 'console';
 import { User } from '@prisma/client';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('user')
+@ApiTags('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -72,10 +74,10 @@ export class UserController {
   @Delete(':id')
   async deleteUser(@Param('id', ParseIntPipe) id: number) {
     try {
-      const findUser = this.userService.getUserById(id);
+      const user = await this.userService.getUserById(id);
 
-      if (findUser == null) {
-        throw new NotFoundException('User Not Found');
+      if (!user) {
+        throw new BadRequestException('User Not Found');
       } else {
         await this.userService.deleteUser(id);
       }
